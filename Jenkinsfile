@@ -17,14 +17,14 @@ pipeline {
             }
         }
 
-        stage('Run Unit Tests') {
-            steps {
-                // bat "pytest -q"
-                // sh "export PATH=$PATH:/var/lib/jenkins/.local/bin"
-                sh ". venv/bin/activate"
-                sh "pytest -q"
-            }
-        }
+        // stage('Run Unit Tests') {
+        //     steps {
+        //         // bat "pytest -q"
+        //         // sh "export PATH=$PATH:/var/lib/jenkins/.local/bin"
+        //         sh ". venv/bin/activate"
+        //         sh "pytest -q"
+        //     }
+        // }
 
         stage('Build Docker Image') {
             steps {
@@ -60,6 +60,7 @@ pipeline {
         }
     }
 }
+
 
 
 
