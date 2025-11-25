@@ -57,7 +57,7 @@ pipeline {
                             echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
 
                             echo "Pushing image..."
-                            docker push ${DOCKER_IMAGE}:latest
+                            docker push ${FULL_IMAGE}
 
                             echo "Logout..."
                             docker logout
@@ -68,6 +68,7 @@ pipeline {
         }
     }
 }
+
 
 
 
