@@ -8,14 +8,20 @@ pipeline {
                 checkout scm
                 
                 // bat "pip install -r requirements.txt"
-                sh "pip install -r requirements.txt"
+                sh """
+                python3 -m venv venv
+                . venv/bin/activate
+                pip install -r requirements.txt
+                """
+                // sh "pip install -r requirements.txt"
             }
         }
 
         stage('Run Unit Tests') {
             steps {
                 // bat "pytest -q"
-                sh "export PATH=$PATH:/var/lib/jenkins/.local/bin"
+                // sh "export PATH=$PATH:/var/lib/jenkins/.local/bin"
+                . venv/bin/activate
                 sh "pytest -q"
             }
         }
@@ -54,6 +60,7 @@ pipeline {
         }
     }
 }
+
 
 
 
