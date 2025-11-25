@@ -21,7 +21,7 @@ pipeline {
             steps {
                 // bat "pytest -q"
                 // sh "export PATH=$PATH:/var/lib/jenkins/.local/bin"
-                . venv/bin/activate
+                sh ". venv/bin/activate"
                 sh "pytest -q"
             }
         }
@@ -60,6 +60,7 @@ pipeline {
         }
     }
 }
+
 
 
 
