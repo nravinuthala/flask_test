@@ -4,6 +4,8 @@ FROM python:3.11-slim
 # Set working directory
 WORKDIR /app
 
+ENV PIP_PROGRESS_BAR=off
+
 # Copy dependency file first (to use Docker layer caching)
 COPY requirements.txt .
 
