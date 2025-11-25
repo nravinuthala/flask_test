@@ -15,6 +15,7 @@ pipeline {
         stage('Run Unit Tests') {
             steps {
                 // bat "pytest -q"
+                export PATH=$PATH:/var/lib/jenkins/.local/bin
                 sh "pytest -q"
             }
         }
@@ -53,4 +54,5 @@ pipeline {
         }
     }
 }
+
 
