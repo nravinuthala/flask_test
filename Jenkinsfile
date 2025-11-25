@@ -1,6 +1,14 @@
 pipeline {
     agent any
 
+    environment {
+        DOCKER_REGISTRY = "docker.io"
+        DOCKER_REPO     = "nravinuthala"
+        IMAGE_NAME      = "flask_app"
+        IMAGE_TAG       = "latest"
+        FULL_IMAGE      = "${DOCKER_REPO}/${IMAGE_NAME}:${IMAGE_TAG}"
+    }
+
     stages {
         stage('Checkout and Install Dependencies') {
             steps {
@@ -30,7 +38,7 @@ pipeline {
             steps {
                 script {
                     sh """
-                        docker build -t ${DOCKER_IMAGE}:latest .
+                        docker build -t ${FULL_IMAGE}:latest .
                     """
                 }
             }
@@ -60,6 +68,7 @@ pipeline {
         }
     }
 }
+
 
 
 
