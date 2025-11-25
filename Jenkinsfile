@@ -38,7 +38,7 @@ pipeline {
             steps {
                 script {
                     sh """
-                        docker build -t ${FULL_IMAGE}:latest .
+                        docker build -t ${FULL_IMAGE} .
                     """
                 }
             }
@@ -68,6 +68,7 @@ pipeline {
         }
     }
 }
+
 
 
 
