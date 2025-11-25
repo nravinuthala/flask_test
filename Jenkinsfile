@@ -2,8 +2,11 @@ pipeline {
     agent any
 
     stages {
-        stage('Install Dependencies') {
+        stage('Checkout and Install Dependencies') {
             steps {
+                // checkout code
+                checkout scm
+                
                 // bat "pip install -r requirements.txt"
                 sh "pip install -r requirements.txt"
             }
@@ -50,3 +53,4 @@ pipeline {
         }
     }
 }
+
