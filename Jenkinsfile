@@ -4,27 +4,49 @@ pipeline {
     stages {
         stage('Install Dependencies') {
             steps {
-                bat "pip install -r requirements.txt"
+                // bat "pip install -r requirements.txt"
+                sh "pip install -r requirements.txt"
             }
         }
 
         stage('Run Unit Tests') {
             steps {
-                bat "pytest -q"
+                // bat "pytest -q"
+                sh "pytest -q"
             }
         }
 
-        // stage('Build Artifact') {
-        //     steps {
-        //         sh "echo Packaging Flask app..."
-        //         sh "tar -czf flask-app.tar.gz app.py requirements.txt"
-        //     }
-        // }
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    sh """
+                        docker build -t ${DOCKER_IMAGE}:latest .
+                    """
+                }
+            }
+        }
 
-        // stage('Deploy') {
-        //     steps {
-        //         echo "Deploy step can be Docker/Kubernetes/EC2/etc"
-        //     }
-        // }
+        stage('Docker Login & Push') {
+            steps {
+                script {
+                    withCredentials([usernamePassword(
+                        credentialsId: 'dockerhub-creds',
+                        usernameVariable: 'DOCKERHUB_USERNAME',
+                        passwordVariable: 'DOCKERHUB_PASSWORD'
+                    )]) {
+                        sh """
+                            echo "Logging into Docker Hub..."
+                            echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
+
+                            echo "Pushing image..."
+                            docker push ${DOCKER_IMAGE}:latest
+
+                            echo "Logout..."
+                            docker logout
+                        """
+                    }
+                }
+            }
+        }
     }
 }
